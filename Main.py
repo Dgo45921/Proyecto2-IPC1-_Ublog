@@ -212,7 +212,7 @@ def PostsCreados():
 
 @app.route('/DarLike', methods=["POST"])
 def DarLike():
-    global Lista_Likes, Cantidad_Likes, Lista_Posts
+    global Lista_Likes, Lista_Posts
     idpost = int(request.json['idpost'])
     authorlike = int(request.json['idauthor'])
     IndiceDelLike = -1
@@ -393,7 +393,7 @@ def TablaUsuarios():
 @app.route('/DeleteUser/<int:id>', methods=["DELETE"])
 def DeleteUser(id):
     print("Hey el id es:", id)
-    global Lista_Usuarios, Cantidad_Usuarios, Lista_Posts, Lista_Likes, Cantidad_Posts, Cantidad_Likes
+    global Lista_Usuarios, Cantidad_Usuarios, Lista_Posts, Lista_Likes, Cantidad_Posts
     usuario_a_eliminar = None
     posts_a_eliminar = []
     likes_a_eliminar = []
@@ -513,7 +513,7 @@ def ObtieneUser():
 @app.route('/DeletePost/<int:id>', methods=["DELETE"])
 def DeletePost(id):
     print("Hey el id es:", id)
-    global Lista_Usuarios, Cantidad_Usuarios, Lista_Posts, Lista_Likes, Cantidad_Posts, Cantidad_Likes
+    global Lista_Usuarios, Cantidad_Usuarios, Lista_Posts, Lista_Likes, Cantidad_Posts
     Indices_de_likes_a_eliminar = []
     AuthorPost = ""
 
