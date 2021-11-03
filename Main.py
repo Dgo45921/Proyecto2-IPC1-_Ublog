@@ -7,11 +7,11 @@ from Post import Post
 from Like import Like
 
 Lista_Posts = []
-Cantidad_Posts = 0
+Cantidad_Posts = 1
 ListaOrdenadaPosts = []
 
-Lista_Usuarios = [User("Darwin Arevalo", "M", "admin", "admin@ipc1.com", "admin@ipc1", 0, 0)]
-Cantidad_Usuarios = 1
+Lista_Usuarios = [User("Darwin Arevalo", "M", "admin", "admin@ipc1.com", "admin@ipc1", 0, 1)]
+Cantidad_Usuarios = 2
 
 Lista_Likes = []
 Cantidad_Likes = 0
