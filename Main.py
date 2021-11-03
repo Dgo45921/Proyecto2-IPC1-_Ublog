@@ -40,7 +40,7 @@ def ModificarUser():
     username = request.json['username']
     email = request.json['email']
     password = request.json['password']
-    id = int(request.json['id'])
+    id_ = int(request.json['id_'])
     oldusername = request.json['oldusername']
     special_characters = "@#$%^&*()-+?_=,<>/"" "
     indiceuser = -1
@@ -51,7 +51,7 @@ def ModificarUser():
             break
 
     for i in range(len(Lista_Usuarios)):
-        if Lista_Usuarios[i].getId() == id:
+        if Lista_Usuarios[i].getId() == id_:
             indiceuser = i
             break
 
@@ -68,7 +68,7 @@ def ModificarUser():
     if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(
             c in special_characters for c in password) and len(password) >= 8 and num_en_password:
         for i in range(len(Lista_Usuarios)):
-            if Lista_Usuarios[i].getId() == id:
+            if Lista_Usuarios[i].getId() == id_:
                 Lista_Usuarios[i].setName(name)
                 Lista_Usuarios[i].setGender(gender)
                 Lista_Usuarios[i].setUsername(username)
@@ -345,8 +345,7 @@ def RecibirUsers():
         contenido = request.json['content']
         users = json.loads(contenido)
         for i in range(len(users)):
-            NuevoUser = User(users[i]['name'], users[i]['gender'].upper(), users[i]['username'], users[i]['email'],
-                             users[i]['password'], 0, Cantidad_Usuarios)
+            NuevoUser = User(users[i]['name'], users[i]['gender'].upper(), users[i]['username'], users[i]['email'], users[i]['password'], 0, Cantidad_Usuarios)
             Lista_Usuarios.append(NuevoUser)
             Cantidad_Usuarios += 1
 
@@ -390,9 +389,9 @@ def TablaUsuarios():
     return jsonify(datos)
 
 
-@app.route('/DeleteUser/<int:id>', methods=["DELETE"])
-def DeleteUser(id):
-    print("Hey el id es:", id)
+@app.route('/DeleteUser/<int:id_>', methods=["DELETE"])
+def DeleteUser(id_):
+    print("Hey el id_ es:", id_)
     global Lista_Usuarios, Cantidad_Usuarios, Lista_Posts, Lista_Likes, Cantidad_Posts, Cantidad_Likes
     usuario_a_eliminar = None
     posts_a_eliminar = []
@@ -400,7 +399,7 @@ def DeleteUser(id):
     posts_a_quitar_like = []
     username = ""
     for user in Lista_Usuarios:
-        if user.getId() == id:
+        if user.getId() == id_:
             usuario_a_eliminar = user
             username = user.getUsername()
             break
@@ -411,7 +410,7 @@ def DeleteUser(id):
             posts_a_eliminar.append(post)
 
     for like in Lista_Likes:
-        if like.getIdAuthor() == id:
+        if like.getIdAuthor() == id_:
             likes_a_eliminar.append(like)
 
     for i in range(len(posts_a_eliminar)):
@@ -439,7 +438,7 @@ def EditUserAdmin(idrecibido):
     username = request.json['username']
     email = request.json['email']
     password = request.json['password']
-    id = idrecibido
+    id_ = idrecibido
     special_characters = "@#$%^&*()-+?_=,<>/"" "
     indiceuser = -1
     oldusername = ""
@@ -450,7 +449,7 @@ def EditUserAdmin(idrecibido):
             break
 
     for i in range(len(Lista_Usuarios)):
-        if Lista_Usuarios[i].getId() == id:
+        if Lista_Usuarios[i].getId() == id_:
             indiceuser = i
             break
 
@@ -469,7 +468,7 @@ def EditUserAdmin(idrecibido):
     if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(
             c in special_characters for c in password) and len(password) >= 8 and num_en_password:
         for i in range(len(Lista_Usuarios)):
-            if Lista_Usuarios[i].getId() == id:
+            if Lista_Usuarios[i].getId() == id_:
                 Lista_Usuarios[i].setName(name)
                 Lista_Usuarios[i].setGender(gender)
                 Lista_Usuarios[i].setUsername(username)
@@ -510,21 +509,21 @@ def ObtieneUser():
     return jsonify(datosuser)
 
 
-@app.route('/DeletePost/<int:id>', methods=["DELETE"])
-def DeletePost(id):
-    print("Hey el id es:", id)
+@app.route('/DeletePost/<int:id_>', methods=["DELETE"])
+def DeletePost(id_):
+    print("Hey el id_ es:", id_)
     global Lista_Usuarios, Cantidad_Usuarios, Lista_Posts, Lista_Likes, Cantidad_Posts, Cantidad_Likes
     Indices_de_likes_a_eliminar = []
     AuthorPost = ""
 
     for post in Lista_Posts:
-        if post.getId() == id:
+        if post.getId() == id_:
             Lista_Posts.remove(post)
             AuthorPost = post.getNameAuthor()
             break
 
     for i in range(len(Lista_Likes)):
-        if Lista_Likes[i].getIdPost() == id:
+        if Lista_Likes[i].getIdPost() == id_:
             Indices_de_likes_a_eliminar.append(i)
 
     print(Indices_de_likes_a_eliminar)
@@ -539,10 +538,10 @@ def DeletePost(id):
     return jsonify({"estado": "exito"})
 
 
-@app.route('/EditPost/<int:id>', methods=["PUT"])
-def EditPost(id):
+@app.route('/EditPost/<int:id_>', methods=["PUT"])
+def EditPost(id_):
     global Lista_Posts, Lista_Usuarios
-    print("Hey el id es ", id)
+    print("Hey el id_ es ", id_)
     type = request.json['type']
     url = request.json['url']
     category = request.json['category']
@@ -561,7 +560,7 @@ def EditPost(id):
 
     if Existent_User:
         for i in range(len(Lista_Posts)):
-            if Lista_Posts[i].getId() == id:
+            if Lista_Posts[i].getId() == id_:
                 index_post = i
                 old_author = Lista_Posts[index_post].getNameAuthor()
                 break
@@ -589,14 +588,14 @@ def EditPost(id):
         return jsonify({"estado": "NonExistent"})
 
 
-@app.route('/InfoPost/<int:id>')
-def InfoPost(id):
+@app.route('/InfoPost/<int:id_>')
+def InfoPost(id_):
     global Lista_Posts
-    print("Hey el id es ", id)
+    print("Hey el id_ es ", id_)
     posthallado = None
 
     for post in Lista_Posts:
-        if post.getId() == id:
+        if post.getId() == id_:
             posthallado = post
             break
 

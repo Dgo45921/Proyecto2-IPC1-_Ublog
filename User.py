@@ -1,12 +1,12 @@
 class User:
-    def __init__(self, name, gender, username, email, password, cantidadposts, id):
+    def __init__(self, name, gender, username, email, password, cantidadposts, id_):
         self.name = name
         self.gender = gender
         self.username = username
         self.email = email
         self.password = password
         self.cantidadposts = cantidadposts
-        self.id = id
+        self.id = id_
 
     # metodos getter
 

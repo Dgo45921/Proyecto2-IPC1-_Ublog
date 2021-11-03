@@ -1,11 +1,11 @@
 class Post:
-    def __init__(self, type, url, date, category, likes, id, nameauthor):
+    def __init__(self, type, url, date, category, likes, id_, nameauthor):
         self.type = type
         self.url = url
         self.date = date
         self.category = category
         self.likes = likes
-        self.id = id
+        self.id = id_
         self.nameauthor = nameauthor
 
     # metodos getter
