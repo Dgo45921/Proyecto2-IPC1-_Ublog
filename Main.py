@@ -40,7 +40,7 @@ def ModificarUser():
     username = request.json['username']
     email = request.json['email']
     password = request.json['password']
-    id_ = int(request.json['id_'])
+    id_ = int(request.json['id'])
     oldusername = request.json['oldusername']
     special_characters = "@#$%^&*()-+?_=,<>/"" "
     indiceuser = -1
