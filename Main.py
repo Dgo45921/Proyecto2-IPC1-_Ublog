@@ -195,19 +195,8 @@ def CreaPost():
 @app.route('/VerPosts')
 def PostsCreados():
     global Lista_Posts
-    datos = []
-    for post in Lista_Posts:
-        objeto = {
-            'type': post.getType(),
-            'url': post.getUrl(),
-            'date': post.getDate(),
-            'category': post.getCategory(),
-            'likes': post.getLikes(),
-            'id': post.getId(),
-            'author': post.getNameAuthor()
-        }
-        datos.append(objeto)
-    return jsonify(datos)
+
+    return  json.dumps([ob.__dict__ for ob in Lista_Posts])
 
 
 @app.route('/DarLike', methods=["POST"])
