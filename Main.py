@@ -1,6 +1,7 @@
 ﻿from flask import Flask, jsonify, request, json
 from urllib.parse import urlparse, parse_qs
 from flask_cors import CORS
+from datetime import datetime
 
 from User import User
 from Post import Post
@@ -169,9 +170,14 @@ def CreaPost():
     global Lista_Posts, Cantidad_Posts, Lista_Usuarios
     type = request.json['type']
     url = request.json['url']
-    date = request.json['date']
+    now = datetime.now()
+    date = now.strftime("%d/%m/%Y %H:%M")
     category = request.json['category']
     author = request.json['author']
+
+    if not url_validator(url):
+        return jsonify({'estado': "invalid"})
+
 
     if type == "videos":
         embed = "https://www.youtube.com/embed/"
@@ -338,7 +344,6 @@ def RecibirPosts():
                     Cantidad_Posts += 1
                     break
 
-
             for j in range(len(Lista_Usuarios)):
                 if images[i]["author"] == Lista_Usuarios[j].getUsername():
                     Lista_Usuarios[j].setCantidadPosts(Lista_Usuarios[j].getCantidadPosts() + 1)
@@ -357,13 +362,11 @@ def RecibirUsers():
         users = json.loads(contenido)
         for i in range(len(users)):
             repetido = False
-            NuevoUser = User(users[i]['name'], users[i]['gender'].upper(), users[i]['username'], users[i]['email'],
-                             users[i]['password'], 0, Cantidad_Usuarios)
+            NuevoUser = User(users[i]['name'], users[i]['gender'].upper(), users[i]['username'], users[i]['email'], users[i]['password'], 0, Cantidad_Usuarios)
             for user in Lista_Usuarios:
                 if user.getUsername() == users[i]['username'] or user.getEmail() == users[i]['email']:
                     repetido = True
                     break
-
 
             if not repetido:
                 Lista_Usuarios.append(NuevoUser)
@@ -575,6 +578,10 @@ def EditPost(id_):
     index_new_author = -1
     index_post = -1
     Existent_User = False
+
+    if not url_validator(url):
+        return jsonify({'estado': "invalid"})
+
     for i in range(len(Lista_Usuarios)):
         if Lista_Usuarios[i].getUsername() == author:
             Existent_User = True
@@ -703,6 +710,14 @@ def get_yt_video_id(input_link):
             raise ValueError
     except:
         return input_link
+
+
+def url_validator(url):
+    try:
+        result = urlparse(url)
+        return all([result.scheme, result.netloc])
+    except:
+        return False
 
 
 if __name__ == '__main__':
