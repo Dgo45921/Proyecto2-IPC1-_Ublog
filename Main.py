@@ -621,7 +621,7 @@ def TopUsers():
 
     UsersOrdenados = sorted(ListaUsers, key=lambda numposts: numposts.getCantidadPosts(), reverse=True)
     Ordenados = []
-    if len(UsersOrdenados) < 5 or len(UsersOrdenados) == 0:
+    if len(UsersOrdenados) < 6 or len(UsersOrdenados) == 0:
         return jsonify({"data": "NoData"})
 
 
