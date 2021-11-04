@@ -318,8 +318,7 @@ def RecibirPosts():
         videos = posts['videos']
 
         for i in range(len(images)):
-            NuevaImagen = Post("images", images[i]["url"], images[i]["date"], images[i]["category"], 0, Cantidad_Posts,
-                               images[i]["author"])
+            NuevaImagen = Post("images", images[i]["url"], images[i]["date"], images[i]["category"], 0, Cantidad_Posts, images[i]["author"])
             Lista_Posts.append(NuevaImagen)
             Cantidad_Posts += 1
 
@@ -328,11 +327,17 @@ def RecibirPosts():
                     Lista_Usuarios[j].setCantidadPosts(Lista_Usuarios[j].getCantidadPosts() + 1)
                     break
 
+
+
+
         for i in range(len(videos)):
-            NuevoVideo = Post("videos", "https://www.youtube.com/embed/" + get_yt_video_id(videos[i]["url"]),
-                              videos[i]["date"], videos[i]["category"], 0, Cantidad_Posts, videos[i]["author"])
-            Lista_Posts.append(NuevoVideo)
-            Cantidad_Posts += 1
+            NuevoVideo = Post("videos", "https://www.youtube.com/embed/" + get_yt_video_id(videos[i]["url"]), videos[i]["date"], videos[i]["category"], 0, Cantidad_Posts, videos[i]["author"])
+            for j in range(len(Lista_Usuarios)):
+                if videos[i]["author"] == Lista_Usuarios[j].getUsername():
+                    Lista_Posts.append(NuevoVideo)
+                    Cantidad_Posts += 1
+                    break
+
 
             for j in range(len(Lista_Usuarios)):
                 if images[i]["author"] == Lista_Usuarios[j].getUsername():
@@ -347,11 +352,11 @@ def RecibirPosts():
 @app.route('/RecibirUsers', methods=["POST"])
 def RecibirUsers():
     try:
-        repetido = False
         global Lista_Usuarios, Cantidad_Usuarios
         contenido = request.json['content']
         users = json.loads(contenido)
         for i in range(len(users)):
+            repetido = False
             NuevoUser = User(users[i]['name'], users[i]['gender'].upper(), users[i]['username'], users[i]['email'],
                              users[i]['password'], 0, Cantidad_Usuarios)
             for user in Lista_Usuarios:
