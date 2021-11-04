@@ -68,8 +68,6 @@ def ModificarUser():
     if not "@" in email:
         return jsonify({'estado': "invalid"})
 
-
-
     if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(
             c in special_characters for c in password) and len(password) >= 8 and num_en_password:
         for i in range(len(Lista_Usuarios)):
@@ -111,11 +109,11 @@ def CrearUsuario():
         if usuario.getUsername() == username or usuario.getEmail() == email:
             return jsonify({'estado': "repetido"})
 
-
     if not "@" in email:
         return jsonify({'estado': "invalid"})
 
-    if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(c in special_characters for c in password) and len(password) >= 8 and num_en_password:
+    if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(
+            c in special_characters for c in password) and len(password) >= 8 and num_en_password:
         NuevoUser = User(name, gender, username, email, password, 0, Cantidad_Usuarios)
         Lista_Usuarios.append(NuevoUser)
         Cantidad_Usuarios += 1
@@ -349,13 +347,22 @@ def RecibirPosts():
 @app.route('/RecibirUsers', methods=["POST"])
 def RecibirUsers():
     try:
+        repetido = False
         global Lista_Usuarios, Cantidad_Usuarios
         contenido = request.json['content']
         users = json.loads(contenido)
         for i in range(len(users)):
-            NuevoUser = User(users[i]['name'], users[i]['gender'].upper(), users[i]['username'], users[i]['email'], users[i]['password'], 0, Cantidad_Usuarios)
-            Lista_Usuarios.append(NuevoUser)
-            Cantidad_Usuarios += 1
+            NuevoUser = User(users[i]['name'], users[i]['gender'].upper(), users[i]['username'], users[i]['email'],
+                             users[i]['password'], 0, Cantidad_Usuarios)
+            for user in Lista_Usuarios:
+                if user.getUsername() == users[i]['username'] or user.getEmail() == users[i]['email']:
+                    repetido = True
+                    break
+
+
+            if not repetido:
+                Lista_Usuarios.append(NuevoUser)
+                Cantidad_Usuarios += 1
 
         return jsonify({'estado': "Success"})
     except:
@@ -472,7 +479,6 @@ def EditUserAdmin(idrecibido):
     for i in range(indiceuser + 1, len(Lista_Usuarios), 1):
         if Lista_Usuarios[i].getUsername() == username or Lista_Usuarios[i].getEmail() == email:
             return jsonify({'estado': "repetido"})
-
 
     if not "@" in email:
         return jsonify({'estado': "invalid"})
@@ -653,7 +659,7 @@ def TopPosts():
     global Lista_Posts
     ListaPosts = []
     for i in range(len(Lista_Posts)):
-         ListaPosts.append(Lista_Posts[i])
+        ListaPosts.append(Lista_Posts[i])
 
     PostsOrdenados = sorted(ListaPosts, key=lambda numposts: numposts.getLikes(), reverse=True)
     Ordenados = []
