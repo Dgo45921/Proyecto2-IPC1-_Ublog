@@ -170,7 +170,7 @@ def CreaPost():
     global Lista_Posts, Cantidad_Posts, Lista_Usuarios
     type = request.json['type']
     url = request.json['url']
-    now = datetime.now()
+    now = datetime.utcnow()
     date = now.strftime("%d/%m/%Y %H:%M")
     category = request.json['category']
     author = request.json['author']
