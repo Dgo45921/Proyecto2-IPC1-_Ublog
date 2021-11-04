@@ -465,7 +465,7 @@ def EditUserAdmin(idrecibido):
             return jsonify({'estado': "repetido"})
 
     if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(
-            c in special_characters for c in password) and len(password) >= 8 and num_en_password:
+            c in special_characters for c in password) and len(password) >= 8 and num_en_password and "@" in password:
         for i in range(len(Lista_Usuarios)):
             if Lista_Usuarios[i].getId() == id_:
                 Lista_Usuarios[i].setName(name)
