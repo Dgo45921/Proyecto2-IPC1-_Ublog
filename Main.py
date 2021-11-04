@@ -65,8 +65,13 @@ def ModificarUser():
         if Lista_Usuarios[i].getUsername() == username or Lista_Usuarios[i].getEmail() == email:
             return jsonify({'estado': "repetido"})
 
+    if not "@" in email:
+        return jsonify({'estado': "invalid"})
+
+
+
     if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(
-            c in special_characters for c in password) and len(password) >= 8 and num_en_password and "@" in email:
+            c in special_characters for c in password) and len(password) >= 8 and num_en_password:
         for i in range(len(Lista_Usuarios)):
             if Lista_Usuarios[i].getId() == id_:
                 Lista_Usuarios[i].setName(name)
@@ -106,7 +111,11 @@ def CrearUsuario():
         if usuario.getUsername() == username or usuario.getEmail() == email:
             return jsonify({'estado': "repetido"})
 
-    if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(c in special_characters for c in password) and len(password) >= 8 and num_en_password and "@" in email:
+
+    if not "@" in email:
+        return jsonify({'estado': "invalid"})
+
+    if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(c in special_characters for c in password) and len(password) >= 8 and num_en_password:
         NuevoUser = User(name, gender, username, email, password, 0, Cantidad_Usuarios)
         Lista_Usuarios.append(NuevoUser)
         Cantidad_Usuarios += 1
@@ -463,6 +472,10 @@ def EditUserAdmin(idrecibido):
     for i in range(indiceuser + 1, len(Lista_Usuarios), 1):
         if Lista_Usuarios[i].getUsername() == username or Lista_Usuarios[i].getEmail() == email:
             return jsonify({'estado': "repetido"})
+
+
+    if not "@" in email:
+        return jsonify({'estado': "invalid"})
 
     if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(
             c in special_characters for c in password) and len(password) >= 8 and num_en_password and "@" in email:
