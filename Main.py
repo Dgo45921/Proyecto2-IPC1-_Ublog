@@ -172,7 +172,7 @@ def CreaPost():
     type = request.json['type']
     url = request.json['url']
     now = datetime.utcnow()+timedelta(hours=-6)
-    date = now.strftime("%d/%m/%Y %H:%M")
+    date = now.strftime("%Y/%m/%d %H:%M")
     category = request.json['category']
     author = request.json['author']
 
