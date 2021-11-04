@@ -324,10 +324,11 @@ def RecibirPosts():
         images = posts['images']
         videos = posts['videos']
 
+
         for i in range(len(images)):
             NuevaImagen = Post("images", images[i]["url"], images[i]["date"], images[i]["category"], 0, Cantidad_Posts, images[i]["author"])
             for j in range(len(Lista_Usuarios)):
-                if images[i]["author"] == Lista_Usuarios[j].getUsername():
+                if images[i]["author"] == Lista_Usuarios[j].getUsername() and url_validator(images[i]["url"]):
                     Lista_Posts.append(NuevaImagen)
                     Cantidad_Posts += 1
                     break
@@ -340,7 +341,7 @@ def RecibirPosts():
         for i in range(len(videos)):
             NuevoVideo = Post("videos", "https://www.youtube.com/embed/" + get_yt_video_id(videos[i]["url"]), videos[i]["date"], videos[i]["category"], 0, Cantidad_Posts, videos[i]["author"])
             for j in range(len(Lista_Usuarios)):
-                if videos[i]["author"] == Lista_Usuarios[j].getUsername():
+                if videos[i]["author"] == Lista_Usuarios[j].getUsername() and url_validator(videos[i]["url"]):
                     Lista_Posts.append(NuevoVideo)
                     Cantidad_Posts += 1
                     break
