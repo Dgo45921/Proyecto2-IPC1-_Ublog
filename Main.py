@@ -649,7 +649,7 @@ def TopPosts():
         return jsonify({"data": "NoData"})
 
 
-    elif len(PostsOrdenados) == 6 or len(PostsOrdenados) > 5:
+    elif len(PostsOrdenados) == 5 or len(PostsOrdenados) > 5:
         for i in range(0, 5, 1):
             Post = {
                 'id': PostsOrdenados[i].getId(),
