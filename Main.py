@@ -66,7 +66,7 @@ def ModificarUser():
             return jsonify({'estado': "repetido"})
 
     if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(
-            c in special_characters for c in password) and len(password) >= 8 and num_en_password:
+            c in special_characters for c in password) and len(password) >= 8 and num_en_password and "@" in email:
         for i in range(len(Lista_Usuarios)):
             if Lista_Usuarios[i].getId() == id_:
                 Lista_Usuarios[i].setName(name)
@@ -106,7 +106,7 @@ def CrearUsuario():
         if usuario.getUsername() == username or usuario.getEmail() == email:
             return jsonify({'estado': "repetido"})
 
-    if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(c in special_characters for c in password) and len(password) >= 8 and num_en_password and "@" in password:
+    if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(c in special_characters for c in password) and len(password) >= 8 and num_en_password and "@" in email:
         NuevoUser = User(name, gender, username, email, password, 0, Cantidad_Usuarios)
         Lista_Usuarios.append(NuevoUser)
         Cantidad_Usuarios += 1
@@ -465,7 +465,7 @@ def EditUserAdmin(idrecibido):
             return jsonify({'estado': "repetido"})
 
     if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(
-            c in special_characters for c in password) and len(password) >= 8 and num_en_password and "@" in password:
+            c in special_characters for c in password) and len(password) >= 8 and num_en_password and "@" in email:
         for i in range(len(Lista_Usuarios)):
             if Lista_Usuarios[i].getId() == id_:
                 Lista_Usuarios[i].setName(name)
