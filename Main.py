@@ -625,7 +625,7 @@ def TopUsers():
         return jsonify({"data": "NoData"})
 
 
-    elif len(UsersOrdenados) == 6 or len(UsersOrdenados) > 5:
+    elif len(UsersOrdenados) == 6 or len(UsersOrdenados) > 6:
         for i in range(0, 5, 1):
             User = {
                 'username': UsersOrdenados[i].getUsername(),
