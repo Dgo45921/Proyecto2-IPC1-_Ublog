@@ -106,8 +106,7 @@ def CrearUsuario():
         if usuario.getUsername() == username or usuario.getEmail() == email:
             return jsonify({'estado': "repetido"})
 
-    if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(
-            c in special_characters for c in password) and len(password) >= 8 and num_en_password:
+    if any(c.islower() for c in password) and any(c.isupper() for c in password) and any(c in special_characters for c in password) and len(password) >= 8 and num_en_password and "@" in password:
         NuevoUser = User(name, gender, username, email, password, 0, Cantidad_Usuarios)
         Lista_Usuarios.append(NuevoUser)
         Cantidad_Usuarios += 1
