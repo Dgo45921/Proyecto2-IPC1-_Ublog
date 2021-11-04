@@ -1,7 +1,7 @@
 ﻿from flask import Flask, jsonify, request, json
 from urllib.parse import urlparse, parse_qs
 from flask_cors import CORS
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from User import User
 from Post import Post
@@ -170,7 +170,7 @@ def CreaPost():
     global Lista_Posts, Cantidad_Posts, Lista_Usuarios
     type = request.json['type']
     url = request.json['url']
-    now = datetime.utcnow()
+    now = datetime.now().time()
     date = now.strftime("%d/%m/%Y %H:%M")
     category = request.json['category']
     author = request.json['author']
