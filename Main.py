@@ -323,10 +323,12 @@ def RecibirPosts():
         posts = json.loads(contenido)
         images = posts['images']
         videos = posts['videos']
+        now = datetime.utcnow() + timedelta(hours=-6)
+        hour = now.strftime("%H:%M")
 
 
         for i in range(len(images)):
-            NuevaImagen = Post("images", images[i]["url"], images[i]["date"], images[i]["category"], 0, Cantidad_Posts, images[i]["author"])
+            NuevaImagen = Post("images", images[i]["url"], images[i]["date"] + " " + hour, images[i]["category"], 0, Cantidad_Posts, images[i]["author"])
             for j in range(len(Lista_Usuarios)):
                 if images[i]["author"] == Lista_Usuarios[j].getUsername() and url_validator(images[i]["url"]):
                     Lista_Posts.append(NuevaImagen)
@@ -339,7 +341,7 @@ def RecibirPosts():
                     break
 
         for i in range(len(videos)):
-            NuevoVideo = Post("videos", "https://www.youtube.com/embed/" + get_yt_video_id(videos[i]["url"]), videos[i]["date"], videos[i]["category"], 0, Cantidad_Posts, videos[i]["author"])
+            NuevoVideo = Post("videos", "https://www.youtube.com/embed/" + get_yt_video_id(videos[i]["url"]), videos[i]["date"]  + " " + hour, videos[i]["category"], 0, Cantidad_Posts, videos[i]["author"])
             for j in range(len(Lista_Usuarios)):
                 if videos[i]["author"] == Lista_Usuarios[j].getUsername() and url_validator(videos[i]["url"]):
                     Lista_Posts.append(NuevoVideo)
