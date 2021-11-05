@@ -182,7 +182,7 @@ def CreaPost():
 
     if type == "videos":
         embed = "https://www.youtube.com/embed/"
-        urlvideo = embed + get_yt_video_id(url)
+        urlvideo = embed + Obtener_Id_Yt(url)
         nuevopost = Post(type, urlvideo, date, category, 0, Cantidad_Posts, author)
         Lista_Posts.append(nuevopost)
         Cantidad_Posts += 1
@@ -341,7 +341,7 @@ def RecibirPosts():
                     break
 
         for i in range(len(videos)):
-            NuevoVideo = Post("videos", "https://www.youtube.com/embed/" + get_yt_video_id(videos[i]["url"]), videos[i]["date"]  + " " + hour, videos[i]["category"], 0, Cantidad_Posts, videos[i]["author"])
+            NuevoVideo = Post("videos", "https://www.youtube.com/embed/" + Obtener_Id_Yt(videos[i]["url"]), videos[i]["date"] + " " + hour, videos[i]["category"], 0, Cantidad_Posts, videos[i]["author"])
             for j in range(len(Lista_Usuarios)):
                 if videos[i]["author"] == Lista_Usuarios[j].getUsername() and url_validator(videos[i]["url"]):
                     Lista_Posts.append(NuevoVideo)
@@ -605,7 +605,7 @@ def EditPost(id_):
                 break
         if type == "videos":
             embed = "https://www.youtube.com/embed/"
-            urlvideo = embed + get_yt_video_id(url)
+            urlvideo = embed + Obtener_Id_Yt(url)
             Lista_Posts[index_post].setUrl(urlvideo)
         else:
             Lista_Posts[index_post].setUrl(url)
@@ -694,7 +694,7 @@ def TopPosts():
 
 
 # ------------------ Funciones externas------------------------------
-def get_yt_video_id(input_link):
+def Obtener_Id_Yt(input_link):
     if input_link.startswith(('youtu', 'www')):
         input_link = 'https://' + input_link
 
