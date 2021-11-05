@@ -699,17 +699,17 @@ def Obtener_Id_Yt(input_link):
         input_link = 'https://' + input_link
 
     try:
-        query = urlparse(input_link)
+        Enlace_Parseado = urlparse(input_link)
 
-        if 'youtube' in query.hostname:
-            if query.path == '/watch':
-                return parse_qs(query.query)['v'][0]
-            elif query.path.startswith(('/embed/', '/v/')):
-                return query.path.split('/')[2]
-        elif 'youtu.be' in query.hostname:
-            return query.path[1:]
-        elif 'youtube' in query.hostname:
-            return query.path[1:]
+        if 'youtube' in Enlace_Parseado.hostname:
+            if Enlace_Parseado.path == '/watch':
+                return parse_qs(Enlace_Parseado.query)['v'][0]
+            elif Enlace_Parseado.path.startswith(('/embed/', '/v/')):
+                return Enlace_Parseado.path.split('/')[2]
+        elif 'youtu.be' in Enlace_Parseado.hostname:
+            return Enlace_Parseado.path[1:]
+        elif 'youtube' in Enlace_Parseado.hostname:
+            return Enlace_Parseado.path[1:]
         else:
             raise ValueError
     except:
